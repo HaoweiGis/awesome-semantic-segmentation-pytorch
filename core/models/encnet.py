@@ -25,8 +25,10 @@ class EncNet(SegBaseModel):
         features = self.base_forward(x)
 
         x = list(self.head(*features))
+        # interpolate 根据给定的size或scale_factor参数来对输入进行下/上采样
         x[0] = F.interpolate(x[0], size, mode='bilinear', align_corners=True)
         if self.aux:
+            # 这里_FCNHead
             auxout = self.auxlayer(features[2])
             auxout = F.interpolate(auxout, size, mode='bilinear', align_corners=True)
             x.append(auxout)

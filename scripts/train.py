@@ -157,6 +157,7 @@ class Trainer(object):
                                           pin_memory=True)
 
         # create network
+        # https://hangzhang.org/PyTorch-Encoding/nn.html SyncBatchNorm解读
         BatchNorm2d = nn.SyncBatchNorm if args.distributed else nn.BatchNorm2d
         self.model = get_segmentation_model(model=args.model, dataset=args.dataset, backbone=args.backbone,
                                             aux=args.aux, jpu=args.jpu, norm_layer=BatchNorm2d).to(self.device)
