@@ -89,6 +89,7 @@ class DeepLabV3Plus(nn.Module):
         outputs.append(x)
         if self.aux:
             auxout = self.auxlayer(c3)
+            # by4
             auxout = F.interpolate(auxout, size, mode='bilinear', align_corners=True)
             outputs.append(auxout)
         return tuple(outputs)

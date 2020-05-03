@@ -84,6 +84,9 @@ class _ChannelAttentionModule(nn.Module):
 
     def forward(self, x):
         batch_size, _, height, width = x.size()
+        # feat_b = self.conv_b(x).view(batch_size, -1, height * width).permute(0, 2, 1)
+        # feat_c = self.conv_c(x).view(batch_size, -1, height * width)
+        # attention_s = self.softmax(torch.bmm(feat_b, feat_c))
         feat_a = x.view(batch_size, -1, height * width)
         feat_a_transpose = x.view(batch_size, -1, height * width).permute(0, 2, 1)
         attention = torch.bmm(feat_a, feat_a_transpose)
